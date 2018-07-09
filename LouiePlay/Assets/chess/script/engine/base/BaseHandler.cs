@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-
-public abstract class BaseHandler {
+﻿public abstract class BaseHandler {
     protected CanjuData canju;
     protected KaijuData kaiju;
     private ExtentData extent;

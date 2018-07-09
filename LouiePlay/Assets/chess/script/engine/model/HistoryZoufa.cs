@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 public class HistoryZoufa {
     public List<FenData> history = new List<FenData>();

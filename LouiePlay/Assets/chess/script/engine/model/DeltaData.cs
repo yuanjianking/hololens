@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-public class DeltaData
+﻿public class DeltaData
 {
     //棋盘左上角为0，0
     public PointData target = new PointData();

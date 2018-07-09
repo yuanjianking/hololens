@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 
 public class Constant {
     //x0-8,y0-9(黑方：0-4，红方：5-9)

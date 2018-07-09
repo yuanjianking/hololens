@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-
 public class ResultData
 {
     public Boolean result = false;

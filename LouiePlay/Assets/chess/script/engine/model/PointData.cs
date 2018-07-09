@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-public class PointData
+﻿public class PointData
 {
     //棋盘左上角为0，0
     public int x = 0;

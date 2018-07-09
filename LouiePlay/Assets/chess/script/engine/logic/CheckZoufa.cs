@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-
+﻿
 public class CheckZoufa : BaseZoufa {
     
     public CheckZoufa(FenData fen) :base(fen)

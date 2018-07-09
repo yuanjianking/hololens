@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-
-public abstract class BaseZoufa {
+﻿public abstract class BaseZoufa {
     protected FenData fen;
     protected BaseZoufa(FenData fen)
     {
