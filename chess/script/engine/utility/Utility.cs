@@ -155,5 +155,4 @@ public class Utility {
         }
         return new PointData();
     }
-    
 }

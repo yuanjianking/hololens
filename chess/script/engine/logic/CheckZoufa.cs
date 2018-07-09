@@ -1246,92 +1246,664 @@ public class CheckZoufa : BaseZoufa {
 
     private ResultData GetRedChe()
     {
-        return new ResultData();
+        ResultData result = new ResultData();
+
+        if (Constant.RED.Equals(fen.current))
+        {
+            //选中的坐标
+            PointData start = fen.selected;
+            int len = Constant.CheZouFaDelta.Length;
+
+            for (int i = 0; i < len; i++)
+            {
+                PointData target = Constant.CheZouFaDelta[i].target;
+                for(int m = 1; m < 10; m++)
+                { 
+                    PointData p = start + target * m;
+
+                    if (!Utility.IsOnQiPan(p))
+                    {
+                        break;
+                    }
+                    else if (fen[p] == Qizi.KONGZI)
+                    {
+                        fen[p] = Qizi.ZHANWEI;
+                    }
+                    else if (Utility.IsBlack(fen[p]))
+                    {
+                        fen[p] = fen[p] + 100;
+                        break;
+                    }
+                    else {
+                        break;
+                    }
+                }
+            }
+            result.result = true;
+            result.pgn.fen = fen;
+        }
+        else
+        {
+            throw new AppException(ErrorMessage.AE0001);
+        }
+        return result;
 
     }
 
     private ResultData GetRedMa()
     {
-        return new ResultData();
+        ResultData result = new ResultData();
 
+        if (Constant.RED.Equals(fen.current))
+        {
+            //选中的坐标
+            PointData start = fen.selected;
+            int len = Constant.MaZouFaDelta.Length;
 
+            for (int i = 0; i < len; i++)
+            {
+                PointData target = Constant.MaZouFaDelta[i].target;
+                PointData delta = Constant.MaZouFaDelta[i].delta;
+                PointData p = start + target;
+                if (!Utility.IsOnQiPan(p))
+                {
+                    continue;
+                }
+                else if (fen[start + delta] != Qizi.KONGZI)
+                {
+                    continue;
+                }
+                else if (fen[p] == Qizi.KONGZI)
+                {
+                    fen[p] = Qizi.ZHANWEI;
+                }
+                else if (Utility.IsBlack(fen[p]))
+                {
+                    fen[p] = fen[p] + 100;
+                }
+                else
+                {
+                    continue;
+                }
+            }
+            result.result = true;
+            result.pgn.fen = fen;
+        }
+        else
+        {
+            throw new AppException(ErrorMessage.AE0001);
+        }
+        return result;
     }
 
     private ResultData GetRedPao()
     {
-        return new ResultData();
+        ResultData result = new ResultData();
+
+        if (Constant.RED.Equals(fen.current))
+        {
+            //选中的坐标
+            PointData start = fen.selected;
+            int len = Constant.PaoZouFaDelta.Length;
+
+            for (int i = 0; i < len; i++)
+            {
+                int poatai = 0;
+                PointData target = Constant.PaoZouFaDelta[i].target;
+                for (int m = 1; m < 10; m++)
+                {
+                    PointData p = start + target * m;
+
+                    if (!Utility.IsOnQiPan(p))
+                    {
+                        break;
+                    }
+                    else if (fen[p] == Qizi.KONGZI && poatai == 0)
+                    {
+                        fen[p] = Qizi.ZHANWEI;
+                    }
+                    else if (Utility.IsBlack(fen[p]))
+                    {
+                        if (poatai == 1)
+                        {
+                            fen[p] = fen[p] + 100;
+                            break;
+                        }
+                        poatai++;                       
+                    }
+                    else
+                    {
+                        poatai++;
+                        if (poatai > 1)
+                        break;
+                        
+                    }
+                }
+            }
+            result.result = true;
+            result.pgn.fen = fen;
+        }
+        else
+        {
+            throw new AppException(ErrorMessage.AE0001);
+        }
+        return result;
 
     }
 
     private ResultData GetRedXiang()
     {
-        return new ResultData();
+        ResultData result = new ResultData();
 
+        if (Constant.RED.Equals(fen.current))
+        {
+            //选中的坐标
+            PointData start = fen.selected;
+            int len = Constant.XiangZouFaDelta.Length;
 
+            for (int i = 0; i < len; i++)
+            {
+                PointData target = Constant.XiangZouFaDelta[i].target;
+                PointData delta = Constant.XiangZouFaDelta[i].delta;
+                PointData p = start + target;
+                if (!Utility.IsOnQiPan(p))
+                {
+                    continue;
+                }
+                else if (Utility.IsRedGuoHe(p))
+                {
+                    continue;
+                }
+                else if (fen[start + delta] != Qizi.KONGZI)
+                {
+                    continue;
+                }
+                else if (fen[p] == Qizi.KONGZI)
+                {
+                    fen[p] = Qizi.ZHANWEI;
+                }
+                else if (Utility.IsBlack(fen[p]))
+                {
+                    fen[p] = fen[p] + 100;
+                }
+                else
+                {
+                    continue;
+                }
+            }
+            result.result = true;
+            result.pgn.fen = fen;
+        }
+        else
+        {
+            throw new AppException(ErrorMessage.AE0001);
+        }
+        return result;
     }
 
 
     private ResultData GetRedShi()
     {
-        return new ResultData();
+        ResultData result = new ResultData();
 
+        if (Constant.RED.Equals(fen.current))
+        {
+            //选中的坐标
+            PointData start = fen.selected;
+            int len = Constant.ShiZouFaDelta.Length;
 
+            for (int i = 0; i < len; i++)
+            {
+                PointData target = Constant.ShiZouFaDelta[i].target;
+                PointData p = start + target;
+                if (!Utility.IsOnQiPan(p))
+                {
+                    continue;
+                }
+                else if (!Utility.IsRedYingZhang(p))
+                {
+                    continue;
+                }
+                else if (fen[p] == Qizi.KONGZI)
+                {
+                    fen[p] = Qizi.ZHANWEI;
+                }
+                else if (Utility.IsBlack(fen[p]))
+                {
+                    fen[p] = fen[p] + 100;
+                }
+                else
+                {
+                    continue;
+                }
+            }
+            result.result = true;
+            result.pgn.fen = fen;
+        }
+        else
+        {
+            throw new AppException(ErrorMessage.AE0001);
+        }
+        return result;
     }
 
     private ResultData GetRedShuai()
     {
-        return new ResultData();
+        ResultData result = new ResultData();
+
+        if (Constant.RED.Equals(fen.current))
+        {
+            //选中的坐标
+            PointData start = fen.selected;
+            int len = Constant.JiangShuaiZouFaDelta.Length;
+
+            for (int i = 0; i < len; i++)
+            {
+                PointData target = Constant.JiangShuaiZouFaDelta[i].target;
+                PointData p = start + target;
+                if (!Utility.IsOnQiPan(p))
+                {
+                    continue;
+                }
+                else if (!Utility.IsRedYingZhang(p))
+                {
+                    continue;
+                }
+                else if (fen[p] == Qizi.KONGZI)
+                {
+                    fen[p] = Qizi.ZHANWEI;
+                }
+                else if (Utility.IsBlack(fen[p]))
+                {
+                    fen[p] = fen[p] + 100;
+                }
+                else
+                {
+                    continue;
+                }
+            }
+            result.result = true;
+            result.pgn.fen = fen;
+        }
+        else
+        {
+            throw new AppException(ErrorMessage.AE0001);
+        }
+        return result;
     }
 
     private ResultData GetRedBing()
     {
-        return new ResultData();
+        ResultData result = new ResultData();
 
-
+        if (Constant.RED.Equals(fen.current))
+        {
+            //选中的坐标
+            PointData start = fen.selected;
+            int len = Constant.BingZouFaDelta.Length;
+            if (!Utility.IsRedGuoHe(start))
+            {
+                len = 1;
+            }
+            for (int i = 0; i < len; i++)
+            {
+                PointData target = Constant.BingZouFaDelta[i].target;
+                PointData p = start + target;
+                if (!Utility.IsOnQiPan(p))
+                {
+                    continue;
+                }
+                else if (fen[p] == Qizi.KONGZI)
+                {
+                    fen[p] = Qizi.ZHANWEI;
+                }
+                else if (Utility.IsBlack(fen[p]))
+                {
+                    fen[p] = fen[p] + 100;
+                }
+                else
+                {
+                    continue;
+                }
+            }
+            result.result = true;
+            result.pgn.fen = fen;
+        }
+        else
+        {
+            throw new AppException(ErrorMessage.AE0001);
+        }
+        return result;
     }
 
     private ResultData GetBlackChe()
     {
-        return new ResultData();
+        ResultData result = new ResultData();
 
+        if (Constant.BLACK.Equals(fen.current))
+        {
+            //选中的坐标
+            PointData start = fen.selected;
+            int len = Constant.CheZouFaDelta.Length;
+
+            for (int i = 0; i < len; i++)
+            {
+                PointData target = Constant.CheZouFaDelta[i].target;
+                for (int m = 1; m < 10; m++)
+                {
+                    PointData p = start + target * m;
+
+                    if (!Utility.IsOnQiPan(p))
+                    {
+                        break;
+                    }
+                    else if (fen[p] == Qizi.KONGZI)
+                    {
+                        fen[p] = Qizi.ZHANWEI;
+                    }
+                    else if (Utility.IsRed(fen[p]))
+                    {
+                        fen[p] = fen[p] + 100;
+                        break;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+            result.result = true;
+            result.pgn.fen = fen;
+        }
+        else
+        {
+            throw new AppException(ErrorMessage.AE0001);
+        }
+        return result;
     }
 
     private ResultData GetBlackMa()
     {
-        return new ResultData();
+        ResultData result = new ResultData();
 
+        if (Constant.BLACK.Equals(fen.current))
+        {
+            //选中的坐标
+            PointData start = fen.selected;
+            int len = Constant.MaZouFaDelta.Length;
 
+            for (int i = 0; i < len; i++)
+            {
+                PointData target = Constant.MaZouFaDelta[i].target;
+                PointData delta = Constant.MaZouFaDelta[i].delta;
+                PointData p = start + target;
+                if (!Utility.IsOnQiPan(p))
+                {
+                    continue;
+                }
+                else if (fen[start + delta] != Qizi.KONGZI)
+                {
+                    continue;
+                }
+                else if (fen[p] == Qizi.KONGZI)
+                {
+                    fen[p] = Qizi.ZHANWEI;
+                }
+                else if (Utility.IsRed(fen[p]))
+                {
+                    fen[p] = fen[p] + 100;
+                }
+                else
+                {
+                    continue;
+                }
+            }
+            result.result = true;
+            result.pgn.fen = fen;
+        }
+        else
+        {
+            throw new AppException(ErrorMessage.AE0001);
+        }
+        return result;
     }
 
     private ResultData GetBlackPao()
     {
-        return new ResultData();
 
+        ResultData result = new ResultData();
+
+        if (Constant.BLACK.Equals(fen.current))
+        {
+            //选中的坐标
+            PointData start = fen.selected;
+            int len = Constant.PaoZouFaDelta.Length;
+
+            for (int i = 0; i < len; i++)
+            {
+                int poatai = 0;
+                PointData target = Constant.PaoZouFaDelta[i].target;
+                for (int m = 1; m < 10; m++)
+                {
+                    PointData p = start + target * m;
+
+                    if (!Utility.IsOnQiPan(p))
+                    {
+                        break;
+                    }
+                    else if (fen[p] == Qizi.KONGZI && poatai == 0)
+                    {
+                        fen[p] = Qizi.ZHANWEI;
+                    }
+                    else if (Utility.IsRed(fen[p]))
+                    {
+                        if (poatai == 1)
+                        {
+                            fen[p] = fen[p] + 100;
+                            break;
+                        }
+                        poatai++;
+                    }
+                    else
+                    {
+                        poatai++;
+                        if (poatai > 1)
+                            break;
+
+                    }
+                }
+            }
+            result.result = true;
+            result.pgn.fen = fen;
+        }
+        else
+        {
+            throw new AppException(ErrorMessage.AE0001);
+        }
+        return result;
     }
 
     private ResultData GetBlackXiang()
     {
-        return new ResultData();
+        ResultData result = new ResultData();
 
+        if (Constant.BLACK.Equals(fen.current))
+        {
+            //选中的坐标
+            PointData start = fen.selected;
+            int len = Constant.XiangZouFaDelta.Length;
 
+            for (int i = 0; i < len; i++)
+            {
+                PointData target = Constant.XiangZouFaDelta[i].target;
+                PointData delta = Constant.XiangZouFaDelta[i].delta;
+                PointData p = start + target;
+                if (!Utility.IsOnQiPan(p))
+                {
+                    continue;
+                }
+                else if (Utility.IsBlackGuoHe(p))
+                {
+                    continue;
+                }
+                else if (fen[start + delta] != Qizi.KONGZI)
+                {
+                    continue;
+                }
+                else if (fen[p] == Qizi.KONGZI)
+                {
+                    fen[p] = Qizi.ZHANWEI;
+                }
+                else if (Utility.IsRed(fen[p]))
+                {
+                    fen[p] = fen[p] + 100;
+                }
+                else
+                {
+                    continue;
+                }
+            }
+            result.result = true;
+            result.pgn.fen = fen;
+        }
+        else
+        {
+            throw new AppException(ErrorMessage.AE0001);
+        }
+        return result;
     }
 
     private ResultData GetBlackShi()
     {
-        return new ResultData();
+        ResultData result = new ResultData();
 
+        if (Constant.BLACK.Equals(fen.current))
+        {
+            //选中的坐标
+            PointData start = fen.selected;
+            int len = Constant.ShiZouFaDelta.Length;
 
+            for (int i = 0; i < len; i++)
+            {
+                PointData target = Constant.ShiZouFaDelta[i].target;
+                PointData p = start + target;
+                if (!Utility.IsOnQiPan(p))
+                {
+                    continue;
+                }
+                else if (!Utility.IsBlackYingZhang(p))
+                {
+                    continue;
+                }
+                else if (fen[p] == Qizi.KONGZI)
+                {
+                    fen[p] = Qizi.ZHANWEI;
+                }
+                else if (Utility.IsRed(fen[p]))
+                {
+                    fen[p] = fen[p] + 100;
+                }
+                else
+                {
+                    continue;
+                }
+            }
+            result.result = true;
+            result.pgn.fen = fen;
+        }
+        else
+        {
+            throw new AppException(ErrorMessage.AE0001);
+        }
+        return result;
     }
 
     private ResultData GetBlackJiang()
     {
-        return new ResultData();
+        ResultData result = new ResultData();
 
+        if (Constant.BLACK.Equals(fen.current))
+        {
+            //选中的坐标
+            PointData start = fen.selected;
+            int len = Constant.JiangShuaiZouFaDelta.Length;
+
+            for (int i = 0; i < len; i++)
+            {
+                PointData target = Constant.JiangShuaiZouFaDelta[i].target;
+                PointData p = start + target;
+                if (!Utility.IsOnQiPan(p))
+                {
+                    continue;
+                }
+                else if (!Utility.IsBlackYingZhang(p))
+                {
+                    continue;
+                }
+                else if (fen[p] == Qizi.KONGZI)
+                {
+                    fen[p] = Qizi.ZHANWEI;
+                }
+                else if (Utility.IsRed(fen[p]))
+                {
+                    fen[p] = fen[p] + 100;
+                }
+                else
+                {
+                    continue;
+                }
+            }
+            result.result = true;
+            result.pgn.fen = fen;
+        }
+        else
+        {
+            throw new AppException(ErrorMessage.AE0001);
+        }
+        return result;
     }
 
     private ResultData GetBlackZu()
     {
-        return new ResultData();
+        ResultData result = new ResultData();
 
+        if (Constant.BLACK.Equals(fen.current))
+        {
+            //选中的坐标
+            PointData start = fen.selected;
+            int len = Constant.ZuZouFaDelta.Length;
+            if (!Utility.IsBlackGuoHe(start))
+            {
+                len = 1;
+            }
+            for (int i = 0; i < len; i++)
+            {
+                PointData target = Constant.ZuZouFaDelta[i].target;
+                PointData p = start + target;
+                if (!Utility.IsOnQiPan(p))
+                {
+                    continue;
+                }
+                else if (fen[p] == Qizi.KONGZI)
+                {
+                    fen[p] = Qizi.ZHANWEI;
+                }
+                else if (Utility.IsRed(fen[p]))
+                {
+                    fen[p] = fen[p] + 100;
+                }
+                else
+                {
+                    continue;
+                }
+            }
+            result.result = true;
+            result.pgn.fen = fen;
+        }
+        else
+        {
+            throw new AppException(ErrorMessage.AE0001);
+        }
+        return result;
     }
 }
