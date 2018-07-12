@@ -1,4 +1,7 @@
-﻿public class PointData
+﻿using System;
+
+public class PointData:ICloneable
+
 {
     //棋盘左上角为0，0
     public int x = 0;
@@ -41,6 +44,16 @@
     {
         return base.ToString();
     }
+
+    public object Clone()
+    {
+        var obj = new PointData();
+        obj.x = this.x;
+        obj.y = this.y;
+        obj.z = this.z;
+        return obj;
+    }
+
     public static PointData operator *(PointData point1, PointData point2)
     {
         PointData p = new PointData();

@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
-public class FenData {
+public class FenData : ICloneable
+{
     public Qizi[,] chess = Constant.CHESS;
     public String current = Constant.RED;
     public int noteatcount = 0;
@@ -13,18 +14,6 @@ public class FenData {
     {
         set { }
         get { return moves[index]; }
-    }
-
-    public Qizi this[int x, int y]
-    {
-        set {
-            chess[x, y] = value;
-        }
-        get
-        {
-            return chess[x, y];
-        }
-
     }
 
     public Qizi this[PointData point]
@@ -42,5 +31,18 @@ public class FenData {
     public Qizi GetCurrentQizi()
     {
         return chess[selected.x, selected.y];
+    }
+
+    public object Clone()
+    {
+        var obj = new FenData();
+        obj.chess = (Qizi[,])this.chess.Clone();
+        obj.current = this.current;
+        obj.noteatcount = this.noteatcount;
+        obj.count = this.count;
+        obj.moves = new List<MoveData>(this.moves.ToArray());
+        obj.selected = (PointData)this.selected.Clone();
+        return obj;
+
     }
 }

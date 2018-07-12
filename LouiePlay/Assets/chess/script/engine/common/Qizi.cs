@@ -10,17 +10,17 @@ public enum Qizi
     //帅
     REDSHUAI = 101,
     //仕
-    REDSHI = 202,
+    REDSHI = 102,
     //相
-    REDXIANG = 203,
+    REDXIANG = 103,
     //马
-    REDMA = 404,
+    REDMA = 104,
     //车
-    REDCHE = 505,
+    REDCHE = 105,
     //炮
-    REDPAO = 606,
+    REDPAO = 106,
     //兵
-    REDBING = 707,
+    REDBING = 107,
     
     //高亮
     //帅

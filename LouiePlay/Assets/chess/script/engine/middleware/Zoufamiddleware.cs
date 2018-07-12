@@ -9,7 +9,7 @@ public class Zoufamiddleware {
 
         try
         {
-            result = (new CheckZoufa(fen)).Check();
+            result = (new CheckZoufa((FenData)fen.Clone())).Check();
         }
         catch (AppException ae)
         {
@@ -35,7 +35,7 @@ public class Zoufamiddleware {
 
         try
         {
-            result = (new CheckZoufa(fen)).GetMoveLine();
+            result = (new CheckZoufa((FenData)fen.Clone())).GetMoveLine();
         }
         catch (AppException ae)
         {
@@ -61,7 +61,7 @@ public class Zoufamiddleware {
 
         try
         {
-            result = (new CreateZoufa(fen)).GetZoufa();
+            result = (new CreateZoufa((FenData)fen.Clone())).GetZoufa();
         }
         catch (AppException ae)
         {

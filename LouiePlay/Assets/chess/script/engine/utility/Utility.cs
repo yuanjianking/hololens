@@ -26,7 +26,7 @@ public class Utility {
 
     public static Boolean IsBlack(Qizi qizi)
     {
-        if (qizi >= Qizi.BLACKJIANG && qizi <= Qizi.BLACKZU)
+        if (qizi >= Qizi.BLACKJIANG && qizi <= Qizi.HIGHLIGHTBLACKZU)
         {
             return true;
         }
@@ -38,13 +38,25 @@ public class Utility {
 
     public static Boolean IsRed(Qizi qizi)
     {
-        if (qizi >= Qizi.REDSHUAI && qizi <= Qizi.REDBING)
+        if (qizi >= Qizi.REDSHUAI && qizi <= Qizi.HIGHLIGHTREDBING)
         {
             return true;
         }
         else
         {
             return false;
+        }
+    }
+
+    public static String GetQiziColor(Qizi qizi)
+    {
+        if (qizi >= Qizi.REDSHUAI && qizi <= Qizi.HIGHLIGHTREDBING)
+        {
+            return Constant.RED;
+        }
+        else
+        {
+            return Constant.BLACK;
         }
     }
 
@@ -68,6 +80,32 @@ public class Utility {
             delta = Constant.CheZouFaDelta[0];
         }
         else {
+            throw new AppException(ErrorMessage.AE0005);
+        }
+        return delta;
+    }
+
+    public static DeltaData GetPaoDelta(PointData offset)
+    {
+        DeltaData delta = null;
+        if (offset.x == 0 && offset.y > 0)
+        {
+            delta = Constant.PaoZouFaDelta[0];
+        }
+        else if (offset.x == 0 && offset.y < 0)
+        {
+            delta = Constant.PaoZouFaDelta[0];
+        }
+        else if (offset.x > 0 && offset.y == 0)
+        {
+            delta = Constant.PaoZouFaDelta[0];
+        }
+        else if (offset.x < 0 && offset.y == 0)
+        {
+            delta = Constant.PaoZouFaDelta[0];
+        }
+        else
+        {
             throw new AppException(ErrorMessage.AE0005);
         }
         return delta;
