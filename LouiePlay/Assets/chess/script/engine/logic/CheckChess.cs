@@ -28,7 +28,7 @@ public class CheckChess :BaseZoufa{
                 throw new AppException(ErrorMessage.AE0009);
             }
             JiangShuaiOK:
-            if (Constant.RED.Equals(fen.current))
+            if (Constant.RED == fen.current)
             {
                 CheJiangJun(shuai);
                 MaJiangJun(shuai);
@@ -52,12 +52,13 @@ public class CheckChess :BaseZoufa{
             change.GoBack();
         }
     }
+
     private void CheJiangJun(PointData point)
     {
         int len = Constant.CheZouFaDelta.Length;
         for (int i = 0; i < len; i++) {
             PointData target = Constant.CheZouFaDelta[i].target;
-            for (int m = 1; m < 10; m++)
+            for (int m = 1; m < Constant.QIPANBIANJIE; m++)
             {
                 PointData p = point + target * m;
                 if (!Utility.IsOnQiPan(p))
@@ -70,8 +71,7 @@ public class CheckChess :BaseZoufa{
                 }
                 else
                 {
-                    if ((Constant.RED.Equals(fen.current) && fen[p] == Qizi.BLACKCHE) ||
-                        (Constant.BLACK.Equals(fen.current) && fen[p] == Qizi.REDCHE))
+                    if (((0x00F0 | fen.current) & (int)fen[p]) == 0x0050)
                     { 
                         throw new AppException(ErrorMessage.AE0008);
                     }
@@ -89,8 +89,7 @@ public class CheckChess :BaseZoufa{
             PointData p = point + Constant.MaZouFaDelta[i].target;
             if (Utility.IsOnQiPan(p))
             {
-                if ((Constant.RED.Equals(fen.current) && fen[p] == Qizi.BLACKMA) ||
-                            (Constant.BLACK.Equals(fen.current) && fen[p] == Qizi.REDMA))
+                if (((0x00F0 | fen.current) & (int)fen[p]) == 0x0040)
                 {
                      PointData delta2 = Constant.MaZouFaDelta[i].delta2;
                     if (fen[point+ delta2] == Qizi.KONGZI)
@@ -109,7 +108,7 @@ public class CheckChess :BaseZoufa{
         {
             PointData target = Constant.PaoZouFaDelta[i].target;
             int paotai = 0;
-            for (int m = 1; m < 10; m++)
+            for (int m = 1; m < Constant.QIPANBIANJIE; m++)
             {
                 PointData p = point + target * m;
                 if (!Utility.IsOnQiPan(p))
@@ -122,9 +121,8 @@ public class CheckChess :BaseZoufa{
                 }
                 else
                 {
-                    if (paotai == 1) { 
-                        if ((Constant.RED.Equals(fen.current) && fen[p] == Qizi.BLACKPAO) ||
-                        (Constant.BLACK.Equals(fen.current) && fen[p] == Qizi.REDPAO))
+                    if (paotai == 1) {
+                        if (((0x00F0 | fen.current) & (int)fen[p]) == 0x0060)
                         {
                             throw new AppException(ErrorMessage.AE0008);
                         }
@@ -141,9 +139,7 @@ public class CheckChess :BaseZoufa{
         ResultData result = new ResultData();
         for (int i = 0; i < 3; i++)
         {
-            if ((Constant.RED.Equals(fen.current) && fen[point + Constant.BingZouFaDelta[i].target] == Qizi.BLACKZU) ||
-                (Constant.BLACK.Equals(fen.current) && fen[point + Constant.ZuZouFaDelta[i].target] == Qizi.REDBING) )
-
+            if (((0x00F0 | fen.current) & (int)fen[point + Constant.BingZouFaDelta[i].target]) == 0x0070)
             {
                 throw new AppException(ErrorMessage.AE0008);
             }
@@ -156,16 +152,14 @@ public class CheckChess :BaseZoufa{
     {
         ResultData result = new ResultData();
        //最新走法
-        MoveData move = fen[0];
+        MoveData move = fen.moves[0];
         //没按直线移动
         if ((move.end - move.start) == PointData.Zero)
         {
             throw new AppException(ErrorMessage.AE0005);
         }
         //自己部队碰撞
-        else if ((Constant.RED.Equals(fen.current) && Utility.IsRed(fen[move.end])) ||
-                    (Constant.BLACK.Equals(fen.current) && Utility.IsBlack(fen[move.end])))
-        {
+        else if ((fen.current & (int)fen[move.end]) != 0x0000){
             throw new AppException(ErrorMessage.AE0007);
         }
         else
@@ -189,8 +183,7 @@ public class CheckChess :BaseZoufa{
                 result.result = true;
                 result.pgn.fen = fen;
             }
-            else if ((Constant.RED.Equals(fen.current) && Utility.IsBlack(fen[move.end])) ||
-                (Constant.BLACK.Equals(fen.current) && Utility.IsRed(fen[move.end])))
+            else if ((fen.current & (int)fen[move.end]) == 0x0000)
 
             {
                 result.result = true;
@@ -206,7 +199,7 @@ public class CheckChess :BaseZoufa{
     {
         ResultData result = new ResultData();
         //最新走法
-        MoveData move = fen[0];
+        MoveData move = fen.moves[0];
         int len = Constant.MaZouFaDelta.Length;
 
         for (int i = 0; i < len; i++)
@@ -225,8 +218,7 @@ public class CheckChess :BaseZoufa{
                     result.result = true;
                     result.pgn.fen = fen;
                 }
-                else if ((Constant.RED.Equals(fen.current) && Utility.IsBlack(fen[move.end])) ||
-                      (Constant.BLACK.Equals(fen.current) && Utility.IsRed(fen[move.end])))
+                else if ((fen.current & (int)fen[move.end]) == 0x0000)
                 {
                     result.result = true;
                     result.caneat = true;
@@ -247,15 +239,14 @@ public class CheckChess :BaseZoufa{
     {
         ResultData result = new ResultData();
         //最新走法
-        MoveData move = fen[0];
+        MoveData move = fen.moves[0];
         //没按直线移动
         if ((move.end - move.start) == PointData.Zero)
         {
             throw new AppException(ErrorMessage.AE0005);
         }
         //自己部队碰撞
-        else if ((Constant.RED.Equals(fen.current) && Utility.IsRed(fen[move.end])) ||
-                    (Constant.BLACK.Equals(fen.current) && Utility.IsBlack(fen[move.end])))
+        else if ((fen.current & (int)fen[move.end]) != 0x0000)
         {
             throw new AppException(ErrorMessage.AE0007);
         }
@@ -280,8 +271,7 @@ public class CheckChess :BaseZoufa{
                 result.result = true;
                 result.pgn.fen = fen;
             }
-            else if (paotai == 1 && ((Constant.RED.Equals(fen.current) && Utility.IsBlack(fen[move.end])) ||
-                (Constant.BLACK.Equals(fen.current) && Utility.IsRed(fen[move.end]))))
+            else if (paotai == 1 && ((fen.current & (int)fen[move.end]) == 0x0000))
 
             {
                 result.result = true;
@@ -301,11 +291,11 @@ public class CheckChess :BaseZoufa{
     {
         ResultData result = new ResultData();
         //最新走法
-        MoveData move = fen[0];
+        MoveData move = fen.moves[0];
         int len = Constant.XiangZouFaDelta.Length;
 
-         if ((Constant.RED.Equals(fen.current) && Utility.IsRedGuoHe(move.end)) ||
-                    (Constant.BLACK.Equals(fen.current) && Utility.IsBlackGuoHe(move.end)))
+         if ((Constant.RED == fen.current && Utility.IsRedGuoHe(move.end)) ||
+                    (Constant.BLACK == fen.current && Utility.IsBlackGuoHe(move.end)))
         {     
             //相过河了
             throw new AppException(ErrorMessage.AE0006);
@@ -327,8 +317,7 @@ public class CheckChess :BaseZoufa{
                     result.result = true;
                     result.pgn.fen = fen;
                 }
-                else if ((Constant.RED.Equals(fen.current) && Utility.IsBlack(fen[move.end])) ||
-                     (Constant.BLACK.Equals(fen.current) && Utility.IsRed(fen[move.end])))
+                else if ((fen.current & (int)fen[move.end]) == 0x0000)
                 {
                     result.result = true;
                     result.caneat = true;
@@ -349,10 +338,10 @@ public class CheckChess :BaseZoufa{
     {
         ResultData result = new ResultData();
        //最新走法
-        MoveData move = fen[0];
+        MoveData move = fen.moves[0];
         int len = Constant.ShiZouFaDelta.Length;
-        if ((Constant.RED.Equals(fen.current) && !Utility.IsRedYingZhang(move.end)) ||
-                   (Constant.BLACK.Equals(fen.current) && !Utility.IsBlackYingZhang(move.end)))
+        if ((Constant.RED == fen.current && !Utility.IsRedYingZhang(move.end)) ||
+                   (Constant.BLACK == fen.current && !Utility.IsBlackYingZhang(move.end)))
         {
             //仕出界了
             throw new AppException(ErrorMessage.AE0006);
@@ -368,8 +357,7 @@ public class CheckChess :BaseZoufa{
                     result.result = true;
                     result.pgn.fen = fen;
                 }
-                else if ((Constant.RED.Equals(fen.current) && Utility.IsBlack(fen[move.end])) ||
-                    (Constant.BLACK.Equals(fen.current) && Utility.IsRed(fen[move.end])))
+                else if ((fen.current & (int)fen[move.end]) == 0x0000)
                 {
                     result.result = true;
                     result.caneat = true;
@@ -390,10 +378,10 @@ public class CheckChess :BaseZoufa{
     {
         ResultData result = new ResultData();
       //最新走法
-        MoveData move = fen[0];
+        MoveData move = fen.moves[0];
         int len = Constant.JiangShuaiZouFaDelta.Length;
-        if ((Constant.RED.Equals(fen.current) && !Utility.IsRedYingZhang(move.end)) ||
-                 (Constant.BLACK.Equals(fen.current) && !Utility.IsBlackYingZhang(move.end)))
+        if ((Constant.RED == fen.current && !Utility.IsRedYingZhang(move.end)) ||
+                 (Constant.BLACK == fen.current && !Utility.IsBlackYingZhang(move.end)))
         {
              //出界了
             throw new AppException(ErrorMessage.AE0006);
@@ -409,8 +397,7 @@ public class CheckChess :BaseZoufa{
                     result.result = true;
                     result.pgn.fen = fen;
                 }
-                else if ((Constant.RED.Equals(fen.current) && Utility.IsBlack(fen[move.end])) ||
-                    (Constant.BLACK.Equals(fen.current) && Utility.IsRed(fen[move.end])))
+                else if ((fen.current & (int)fen[move.end]) == 0x0000)
                 {
                     result.result = true;
                     result.caneat = true;
@@ -431,10 +418,10 @@ public class CheckChess :BaseZoufa{
     {
         ResultData result = new ResultData();
         //最新走法
-        MoveData move = fen[0];
+        MoveData move = fen.moves[0];
         int len = 1;
-        if ((Constant.RED.Equals(fen.current) && Utility.IsRedGuoHe(move.end)) ||
-                    (Constant.BLACK.Equals(fen.current) && Utility.IsBlackGuoHe(move.end)))
+        if ((Constant.RED == fen.current && Utility.IsRedGuoHe(move.end)) ||
+                    (Constant.BLACK == fen.current && Utility.IsBlackGuoHe(move.end)))
         {
             len = 3;
         }
@@ -442,7 +429,7 @@ public class CheckChess :BaseZoufa{
         for (int i = 0; i < len; i++)
         {
             PointData p;
-            if (Constant.RED.Equals(fen.current))
+            if (Constant.RED == fen.current)
             {
                 p = move.start + Constant.BingZouFaDelta[i].target;
             }
@@ -458,8 +445,7 @@ public class CheckChess :BaseZoufa{
                     result.result = true;
                     result.pgn.fen = fen;
                 }
-                else if ((Constant.RED.Equals(fen.current) && Utility.IsBlack(fen[move.end])) ||
-                  (Constant.BLACK.Equals(fen.current) && Utility.IsRed(fen[move.end])))
+                else if ((fen.current & (int)fen[move.end]) == 0x0000)
                 {
                    
                     result.result = true;

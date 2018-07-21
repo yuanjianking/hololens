@@ -1,19 +1,20 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 public class HistoryZoufa {
-    public List<FenData> history = new List<FenData>();
-    public List<FenData> History
+    private Dictionary<String, MoveData> zouf = new Dictionary<String, MoveData>();
+    public Dictionary<String, MoveData> ZouFa
     {
         set
         {
-            history = value;
+            zouf = value;
         }
-        get { return history; }
+        get { return zouf; }
     }
 
-    public FenData this[int index]
+    public MoveData this[string key]
     {
         set { }
-        get { return History[index]; }
+        get { return ZouFa[key]; }
     }
 }

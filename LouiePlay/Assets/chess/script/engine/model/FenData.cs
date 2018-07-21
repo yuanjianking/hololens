@@ -4,18 +4,12 @@ using System.Collections.Generic;
 public class FenData : ICloneable
 {
     public Qizi[,] chess = Constant.CHESS;
-    public String current = Constant.RED;
+    public int current = Constant.RED;
     public int noteatcount = 0;
     public int count = 0;
     public List<MoveData> moves = new List<MoveData>();
     public PointData selected = new  PointData();
-
-    public MoveData this[int index]
-    {
-        set { }
-        get { return moves[index]; }
-    }
-
+    
     public Qizi this[PointData point]
     {
         set

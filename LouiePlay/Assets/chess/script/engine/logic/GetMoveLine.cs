@@ -18,7 +18,7 @@ public class GetMoveLine : BaseZoufa
         for (int i = 0; i < len; i++)
         {
             PointData target = Constant.CheZouFaDelta[i].target;
-            for (int m = 1; m < 10; m++)
+            for (int m = 1; m < Constant.QIPANBIANJIE; m++)
             {
                 PointData p = start + target * m;
 
@@ -30,10 +30,9 @@ public class GetMoveLine : BaseZoufa
                 {
                     fen[p] = Qizi.ZHANWEI;
                 }
-                else if ((Constant.RED.Equals(fen.current) && Utility.IsBlack(fen[p])) ||
-                      (Constant.BLACK.Equals(fen.current) && Utility.IsRed(fen[p])))
+                else if ((fen.current & (int)fen[p]) == 0x0000)
                 {
-                    fen[p] = fen[p] + 100;
+                    fen[p] = fen[p] + Constant.QIZIGAOLIANG;
                     break;
                 }
                 else
@@ -73,10 +72,9 @@ public class GetMoveLine : BaseZoufa
             {
                 fen[p] = Qizi.ZHANWEI;
             }
-            else if ((Constant.RED.Equals(fen.current) && Utility.IsBlack(fen[p])) ||
-                  (Constant.BLACK.Equals(fen.current) && Utility.IsRed(fen[p])))
+            else if ((fen.current & (int)fen[p]) == 0x0000)
             {
-                fen[p] = fen[p] + 100;
+                fen[p] = fen[p] + Constant.QIZIGAOLIANG;
             }
             else
             {
@@ -99,7 +97,7 @@ public class GetMoveLine : BaseZoufa
         {
             int poatai = 0;
             PointData target = Constant.PaoZouFaDelta[i].target;
-            for (int m = 1; m < 10; m++)
+            for (int m = 1; m < Constant.QIPANBIANJIE; m++)
             {
                 PointData p = start + target * m;
 
@@ -111,12 +109,11 @@ public class GetMoveLine : BaseZoufa
                 {
                     fen[p] = Qizi.ZHANWEI;
                 }
-                else if ((Constant.RED.Equals(fen.current) && Utility.IsBlack(fen[p])) ||
-                      (Constant.BLACK.Equals(fen.current) && Utility.IsRed(fen[p])))
+                else if ((fen.current & (int)fen[p]) == 0x0000)
                 {
                     if (poatai == 1)
                     {
-                        fen[p] = fen[p] + 100;
+                        fen[p] = fen[p] + Constant.QIZIGAOLIANG;
                         break;
                     }
                     poatai++;
@@ -153,8 +150,8 @@ public class GetMoveLine : BaseZoufa
             {
                 continue;
             }
-            else if ((Constant.RED.Equals(fen.current) && Utility.IsRedGuoHe(p)) ||
-                     (Constant.BLACK.Equals(fen.current) && Utility.IsBlackGuoHe(p)))
+            else if ((Constant.RED == fen.current && Utility.IsRedGuoHe(p)) ||
+                     (Constant.BLACK == fen.current && Utility.IsBlackGuoHe(p)))
             {
                 continue;
             }
@@ -166,10 +163,9 @@ public class GetMoveLine : BaseZoufa
             {
                 fen[p] = Qizi.ZHANWEI;
             }
-            else if ((Constant.RED.Equals(fen.current) && Utility.IsBlack(fen[p])) ||
-                (Constant.BLACK.Equals(fen.current) && Utility.IsRed(fen[p])))
+            else if ((fen.current & (int)fen[p]) == 0x0000)
             {
-                fen[p] = fen[p] + 100;
+                fen[p] = fen[p] + Constant.QIZIGAOLIANG;
             }
             else
             {
@@ -197,8 +193,8 @@ public class GetMoveLine : BaseZoufa
             {
                 continue;
             }
-            else if ((Constant.RED.Equals(fen.current) && !Utility.IsRedYingZhang(p)) ||
-                     (Constant.BLACK.Equals(fen.current) && !Utility.IsBlackYingZhang(p)))
+            else if ((Constant.RED == fen.current && !Utility.IsRedYingZhang(p)) ||
+                     (Constant.BLACK == fen.current && !Utility.IsBlackYingZhang(p)))
             {
                 continue;
             }
@@ -206,10 +202,9 @@ public class GetMoveLine : BaseZoufa
             {
                 fen[p] = Qizi.ZHANWEI;
             }
-            else if ((Constant.RED.Equals(fen.current) && Utility.IsBlack(fen[p])) ||
-              (Constant.BLACK.Equals(fen.current) && Utility.IsRed(fen[p])))
+            else if ((fen.current & (int)fen[p]) == 0x0000)
             {
-                fen[p] = fen[p] + 100;
+                fen[p] = fen[p] + Constant.QIZIGAOLIANG;
             }
             else
             {
@@ -236,8 +231,8 @@ public class GetMoveLine : BaseZoufa
             {
                 continue;
             }
-            else if ((Constant.RED.Equals(fen.current) && !Utility.IsRedYingZhang(p)) ||
-                     (Constant.BLACK.Equals(fen.current) && !Utility.IsBlackYingZhang(p)))
+            else if ((Constant.RED == fen.current && !Utility.IsRedYingZhang(p)) ||
+                     (Constant.BLACK == fen.current && !Utility.IsBlackYingZhang(p)))
             {
                 continue;
             }
@@ -245,10 +240,9 @@ public class GetMoveLine : BaseZoufa
             {
                 fen[p] = Qizi.ZHANWEI;
             }
-            else if ((Constant.RED.Equals(fen.current) && Utility.IsBlack(fen[p])) ||
-              (Constant.BLACK.Equals(fen.current) && Utility.IsRed(fen[p])))
+            else if ((fen.current & (int)fen[p]) == 0x0000)
             {
-                fen[p] = fen[p] + 100;
+                fen[p] = fen[p] + Constant.QIZIGAOLIANG;
             }
             else
             {
@@ -266,15 +260,15 @@ public class GetMoveLine : BaseZoufa
         //选中的坐标
         PointData start = fen.selected;
         int len = 1;
-        if ((Constant.RED.Equals(fen.current) && Utility.IsRedGuoHe(start)) ||
-                     (Constant.BLACK.Equals(fen.current) && Utility.IsBlackGuoHe(start)))
+        if ((Constant.RED == fen.current && Utility.IsRedGuoHe(start)) ||
+                     (Constant.BLACK == fen.current && Utility.IsBlackGuoHe(start)))
         {
                 len = 3;
         }
         for (int i = 0; i < len; i++)
         {
             PointData target;
-            if (Constant.RED.Equals(fen.current))
+            if (Constant.RED == fen.current)
             {
                 target = Constant.BingZouFaDelta[i].target;
             }
@@ -292,10 +286,9 @@ public class GetMoveLine : BaseZoufa
             {
                 fen[p] = Qizi.ZHANWEI;
             }
-            else if ((Constant.RED.Equals(fen.current) && Utility.IsBlack(fen[p])) ||
-                 (Constant.BLACK.Equals(fen.current) && Utility.IsRed(fen[p])))
+            else if ((fen.current & (int)fen[p]) == 0x0000)
             {
-                fen[p] = fen[p] + 100;
+                fen[p] = fen[p] + Constant.QIZIGAOLIANG;
             }
             else
             {

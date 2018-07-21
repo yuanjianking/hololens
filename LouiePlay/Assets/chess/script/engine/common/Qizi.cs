@@ -2,73 +2,73 @@
 public enum Qizi
 {
     //空子
-    KONGZI = 0,
+    KONGZI = 0x0000,
     //占位
-    ZHANWEI = 1,
+    ZHANWEI = 0x000F,
     //红方
     //平常
     //帅
-    REDSHUAI = 101,
+    REDSHUAI = 0x0011,
     //仕
-    REDSHI = 102,
+    REDSHI = 0x0021,
     //相
-    REDXIANG = 103,
+    REDXIANG = 0x0031,
     //马
-    REDMA = 104,
+    REDMA = 0x0041,
     //车
-    REDCHE = 105,
+    REDCHE = 0x0051,
     //炮
-    REDPAO = 106,
+    REDPAO = 0x0061,
     //兵
-    REDBING = 107,
+    REDBING = 0x0071,
     
     //高亮
     //帅
-    HIGHLIGHTREDSHUAI = 201,
+    HIGHLIGHTREDSHUAI = 0xFF11,
     //仕
-    HIGHLIGHTREDSHI = 202,
+    HIGHLIGHTREDSHI = 0xFF21,
     //相
-    HIGHLIGHTREDXIANG = 203,
+    HIGHLIGHTREDXIANG = 0xFF31,
     //马
-    HIGHLIGHTREDMA = 204,
+    HIGHLIGHTREDMA = 0xFF41,
     //车
-    HIGHLIGHTREDCHE = 205,
+    HIGHLIGHTREDCHE = 0xFF51,
     //炮
-    HIGHLIGHTREDPAO = 206,
+    HIGHLIGHTREDPAO = 0xFF61,
     //兵
-    HIGHLIGHTREDBING = 207,
+    HIGHLIGHTREDBING = 0xFF71,
 
     //黑方
     //平常
     //将
-    BLACKJIANG = 301,
+    BLACKJIANG = 0x0012,
     //士
-    BLACKSHI = 302,
+    BLACKSHI = 0x0022,
     //象
-    BLACKXIANG = 303,
+    BLACKXIANG = 0x0032,
     //马
-    BLACKMA = 304,
+    BLACKMA = 0x0042,
     //车
-    BLACKCHE = 305,
+    BLACKCHE = 0x0052,
     //炮
-    BLACKPAO = 306,
+    BLACKPAO = 0x0062,
     //卒
-    BLACKZU = 307,
+    BLACKZU = 0x0072,
 
     //高亮
     //将
-    HIGHLIGHTBLACKJIANG = 401,
+    HIGHLIGHTBLACKJIANG = 0xFF12,
     //士
-    HIGHLIGHTBLACKSHI = 402,
+    HIGHLIGHTBLACKSHI = 0xFF22,
     //象
-    HIGHLIGHTBLACKXIANG = 403,
+    HIGHLIGHTBLACKXIANG = 0xFF32,
     //马
-    HIGHLIGHTBLACKMA = 404,
+    HIGHLIGHTBLACKMA = 0xFF42,
     //车
-    HIGHLIGHTBLACKCHE = 405,
+    HIGHLIGHTBLACKCHE = 0xFF52,
     //炮
-    HIGHLIGHTBLACKPAO = 406,
+    HIGHLIGHTBLACKPAO = 0xFF62,
     //卒
-    HIGHLIGHTBLACKZU = 407
+    HIGHLIGHTBLACKZU = 0xFF72
 }
 

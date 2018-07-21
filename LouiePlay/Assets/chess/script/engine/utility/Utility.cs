@@ -5,7 +5,7 @@ public class Utility {
     public static void CheckQizi(FenData fen)
     { 
         //最新走法
-        MoveData move = fen[0];
+        MoveData move = fen.moves[0];
         //当前选择
         PointData point = fen.selected;
 
@@ -23,42 +23,7 @@ public class Utility {
             throw new AppException(ErrorMessage.AE0006);
         }
     }
-
-    public static Boolean IsBlack(Qizi qizi)
-    {
-        if (qizi >= Qizi.BLACKJIANG && qizi <= Qizi.HIGHLIGHTBLACKZU)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    public static Boolean IsRed(Qizi qizi)
-    {
-        if (qizi >= Qizi.REDSHUAI && qizi <= Qizi.HIGHLIGHTREDBING)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    public static String GetQiziColor(Qizi qizi)
-    {
-        if (qizi >= Qizi.REDSHUAI && qizi <= Qizi.HIGHLIGHTREDBING)
-        {
-            return Constant.RED;
-        }
-        else
-        {
-            return Constant.BLACK;
-        }
-    }
+    
 
     public static DeltaData GetCheDelta(PointData offset)
     {
@@ -189,5 +154,20 @@ public class Utility {
             }
         }
         return new PointData();
+    }
+
+    public static Boolean CanEat(FenData fen)
+    {
+
+        if (fen[fen.moves[0].end] == Qizi.KONGZI)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    public static String ConvertQiPanToString(FenData fen)
+    {
+        return fen.chess.ToString();
     }
 }

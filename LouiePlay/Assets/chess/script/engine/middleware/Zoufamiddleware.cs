@@ -55,28 +55,10 @@ public class Zoufamiddleware {
     }
 
 
-    public ResultData GetZoufa(FenData fen)
+    public MoveData GetZoufa(FenData fen)
     {
-        ResultData result = new ResultData();
+        MoveData result = new MoveData();
 
-        try
-        {
-            result = (new CreateZoufa((FenData)fen.Clone())).GetZoufa();
-        }
-        catch (AppException ae)
-        {
-            result.errorcode = ae.GetMsgCode();
-            result.errormsg = ae.GetMsg();
-        }
-        catch (Exception e)
-        {
-            result.errorcode = "99";
-            result.errormsg = e.Message;
-        }
-        finally
-        {
-            
-        }
-        return result;
+        return (new GetZoufa(fen)).Zoufa();
     }
 }

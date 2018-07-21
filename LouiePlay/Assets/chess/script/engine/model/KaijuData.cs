@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 public class KaijuData {
-    public List<String> kaiju = new List<String>();
-    public List<String> KaiJu
+    private Dictionary<String,MoveData> kaiju = new Dictionary<String, MoveData>();
+    public Dictionary<String, MoveData> KaiJu
     {
         set
         {
@@ -12,9 +13,9 @@ public class KaijuData {
         get { return kaiju; }
     }
 
-    public String this[int index]
+    public MoveData this[string key]
     {
         set { }
-        get { return KaiJu[index]; }
+        get { return KaiJu[key]; }
     }
 }

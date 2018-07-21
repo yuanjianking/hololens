@@ -47,6 +47,13 @@ public class Constant {
                                              new DeltaData(1, 0, 1, 0) };
 
     //对弈两方
-    public readonly static String RED = "0";
-    public readonly static String BLACK= "1";
+    public readonly static int RED = 0x0001;
+    public readonly static int BLACK= 0x0002;
+    //对弈双方MASK
+    public readonly static int QIZIGAOLIANG = 0xFF00;
+
+    //棋盘边界线
+    public readonly static int QIPANBIANJIE = 10;
+
 }
+

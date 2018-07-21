@@ -15,7 +15,7 @@ public class CheckZoufa : BaseZoufa {
         Utility.CheckQizi(fen);
 
         Qizi qizi = fen.GetCurrentQizi();
-        if (!fen.current.Equals(Utility.GetQiziColor(qizi)))
+        if ((fen.current & (int)qizi) == 0x0000)
         {
             throw new AppException(ErrorMessage.AE0001);
         }
