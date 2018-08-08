@@ -1,55 +1,59 @@
 ﻿using System.Collections;
 
+//象棋引擎接口类
 public class ChineseChessHandler:BaseHandler {
 
     Zoufamiddleware Zoufamiddleware = new Zoufamiddleware();
-
-    public override ExtentData Extent
-    {
-        get
-        {
-            return Extent;
-        }
-
-        set
-        {
-            Extent = value;
-        }
-    }
-
+    private static ChineseChessHandler chessHandler = null;
     ChineseChessHandler() : base()
     {
-        HistoryZouFaManager.RemoveAll();
+        new HistoryZoufaLoader().RemoveAll();
     }
 
+    public static ChineseChessHandler GetNewInstant()
+    {
+        chessHandler = new ChineseChessHandler();
+        return chessHandler;
+    }
+
+    public static ChineseChessHandler GetInstant()
+    {
+        if (chessHandler == null)
+        {
+            GetNewInstant();
+        }
+        return chessHandler;
+    }
+
+    //检查走法合法性
     public ResultData CheckZoufa(FenData fen)
     {
         ResultData result = Zoufamiddleware.CheckZoufa(fen);
-        result.pgn.extent = Extent;
         return result;
     }
 
+    //获取棋子路线
     public ResultData GetMoveLine(FenData fen)
     {
         ResultData result = Zoufamiddleware.GetMoveLine(fen);
-        result.pgn.extent = Extent;
         return result;
     }
 
+    //获得最佳走法
     public ResultData GetZoufa(FenData fen)
     {
-        ResultData result = null;
+        ResultData result = new ResultData();
         MoveData move = null;
-      
+
         //获取历史走法
-        move = GetHistoryZouFa(fen);
+        move = new HistoryZoufaLoader().GetZoufa(Utility.ConvertQiPanToString(fen));
         if (move != null) goto Complete;
 
         //查询开局库
         //没完 什么时间看开局库
         if (1 == 1)
         {
-            move = GetKaiJuData(fen);
+            move = kaijuloader.GetKaiju(Utility.ConvertQiPanToString(fen));
             if (move != null) goto Complete;
         }
 
@@ -57,40 +61,17 @@ public class ChineseChessHandler:BaseHandler {
         //没完 什么时间看残局库
         if (2 == 2)
         {
-            move = GetCanJuData(fen);
+            move = canjuloader.GetCanju(Utility.ConvertQiPanToString(fen));
             if (move != null) goto Complete;
         }
 
         move = Zoufamiddleware.GetZoufa(fen);
         Complete:
-        fen.moves.Insert(0, move);
-        result.pgn.fen = fen;
+        result.moves.Add(move);
         result.result = true;
-        result.caneat = Utility.CanEat(fen);
-
-        result.pgn.extent = Extent;
-
-        HistoryZouFaManager.AddZouFa(result.pgn.fen);
+        result.caneat = Utility.CanEat(fen,move);
+        new HistoryZoufaLoader().AddZoufa(Utility.ConvertQiPanToString(fen), move);
         return result;
     }
-
-
-
-    private MoveData GetKaiJuData(FenData fen)
-    {
-        //查询开局库
-        return canju[Utility.ConvertQiPanToString(fen)];
-    }
-
-    private MoveData GetCanJuData(FenData fen)
-    {
-        //查询残局库
-        return kaiju[Utility.ConvertQiPanToString(fen)];
-    }
-
-    private MoveData GetHistoryZouFa(FenData fen)
-    {
-        //查询历史走发
-        return HistoryZouFaManager.GetZouFa(Utility.ConvertQiPanToString(fen));
-    }
+    
 }

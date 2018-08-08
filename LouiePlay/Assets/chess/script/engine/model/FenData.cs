@@ -9,7 +9,10 @@ public class FenData : ICloneable
     public int count = 0;
     public List<MoveData> moves = new List<MoveData>();
     public PointData selected = new  PointData();
-    
+
+    //自己FLAG
+    public int player1 = Constant.RED;
+
     public Qizi this[PointData point]
     {
         set
@@ -22,6 +25,8 @@ public class FenData : ICloneable
         }
 
     }
+
+
     public Qizi GetCurrentQizi()
     {
         return chess[selected.x, selected.y];

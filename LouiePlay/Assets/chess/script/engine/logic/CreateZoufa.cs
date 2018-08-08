@@ -1,9 +1,13 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
+//生成当前棋局全部走法
 public class CreateZoufa : BaseZoufa
-{    
+{
+    private static ILogger log = Debug.unityLogger;
+
     public CreateZoufa(FenData fen) : base(fen)
     {
        
@@ -37,6 +41,12 @@ public class CreateZoufa : BaseZoufa
                 result.AddRange(map[i].ToArray());
             if (map.ContainsKey(i + 1))
                 result.AddRange(map[i + 1].ToArray());
+            if (map.ContainsKey(i + 2))
+                result.AddRange(map[i + 2].ToArray());
+            if (map.ContainsKey(i + 3))
+                result.AddRange(map[i + 3].ToArray());
+            if (map.ContainsKey(i + 4))
+                result.AddRange(map[i + 4].ToArray());
         }
 
         return result;
@@ -86,13 +96,15 @@ public class CreateZoufa : BaseZoufa
                 break;
 
             case Qizi.KONGZI:
-            case Qizi.ZHANWEI:
             default:
                 break;
         }
-
-        if (map.ContainsKey(key)) key++;
-        map.Add(key, list);
+        if(list != null)
+        { 
+           while(map.ContainsKey(key))
+                ++key;
+            map.Add(key, list);
+        }
     }
 
     private void GetCheList(out List<MoveData> list, PointData start)
@@ -180,10 +192,11 @@ public class CreateZoufa : BaseZoufa
                 {
                     break;
                 }
-                else if (fen[p] == Qizi.KONGZI && poatai == 0)
+                else if (fen[p] == Qizi.KONGZI)                    
                 {
                     //添加走法
-                    AddZouFa(ref list, start, p);
+                    if(poatai == 0)
+                        AddZouFa(ref list, start, p);
                 }
                 else if ((fen.current & (int)fen[p]) == 0x0000)
                 {
@@ -366,8 +379,11 @@ public class CreateZoufa : BaseZoufa
         try
         {
             fen.moves.Insert(0, move);
-            new CheckChess(fen).CheckJiangjun();
+            new CheckZoufa(fen).CheckJiangjun();
             list.Add(move);
+        }
+        catch (AppException)
+        {
         }
         finally
         {

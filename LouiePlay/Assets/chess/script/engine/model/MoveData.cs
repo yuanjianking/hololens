@@ -11,8 +11,6 @@ public class MoveData : ICloneable {
         obj.end = (PointData) this.end.Clone();
         return obj;
     }
-
-
     public MoveData()
     {
 

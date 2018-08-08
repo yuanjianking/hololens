@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 
-public class ZiLiProvider
+public class ZiliProvider
 {
     //棋子子力
     //车
@@ -20,7 +20,7 @@ public class ZiLiProvider
 
     private static Hashtable tabe = new Hashtable();
 
-    static ZiLiProvider()
+    static ZiliProvider()
     {
         tabe.Add(Qizi.BLACKCHE, ZHILI100);
         tabe.Add(Qizi.BLACKMA, ZHILI60);
@@ -39,7 +39,7 @@ public class ZiLiProvider
         tabe.Add(Qizi.REDBING, ZHILI10);
     }
     
-    public static int GetZiLi(Qizi qizi, PointData point)
+    public static int GetZili(Qizi qizi, PointData point)
     {
         int zili = 0;
         zili = (int)tabe[qizi];

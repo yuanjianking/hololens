@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 
-public class ChangeQiPan:BaseZoufa
+//走棋
+public class ChangeQipan:BaseZoufa
 {
     private List<Qizi[]> moves = new List<Qizi[]>();
 
-    public ChangeQiPan(FenData fen) : base(fen)
+    public ChangeQipan(FenData fen) : base(fen)
     {
        
     }
@@ -40,7 +41,7 @@ public class ChangeQiPan:BaseZoufa
         Qizi[] qizis = moves[0];
         fen[move.start] = qizis[0];
         fen[move.end] = qizis[1];
-        fen.current = fen.current ^ 0xFF;
+        fen.current = fen.current ^ 0x0003;
         moves.RemoveAt(0);
         fen.moves.RemoveAt(0);
     }

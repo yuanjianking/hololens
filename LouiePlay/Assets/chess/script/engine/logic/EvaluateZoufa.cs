@@ -1,10 +1,9 @@
 ﻿
 using System.Collections;
 
+//棋局评估类
 public class EvaluateZoufa : BaseZoufa
 {
-
- 
     public EvaluateZoufa(FenData fen) : base(fen)
     {
       
@@ -14,7 +13,7 @@ public class EvaluateZoufa : BaseZoufa
     {
         int count = 0;
         //子力
-        count = GetZiLiEvaluate();
+        count = GetZiliEvaluate();
         //局势
         count += GetJuShiEvaluate();
         //趋向
@@ -23,7 +22,7 @@ public class EvaluateZoufa : BaseZoufa
         return count;
     }
 
-    private int GetZiLiEvaluate()
+    private int GetZiliEvaluate()
     {
         int zili = 0;
         //x0-8,y0-9(黑方：0-4，红方：5-9)
@@ -38,12 +37,12 @@ public class EvaluateZoufa : BaseZoufa
                     if (((int)qizi & fen.current) == 0x0000)
                     {
                         //对手棋子
-                        zili -= ZiLiProvider.GetZiLi(qizi, point);
+                        zili -= ZiliProvider.GetZili(qizi, point);
                     }
                     else
                     {
                         //自己棋子
-                        zili += ZiLiProvider.GetZiLi(qizi, point);
+                        zili += ZiliProvider.GetZili(qizi, point);
                     }
                 }
             }
@@ -55,7 +54,7 @@ public class EvaluateZoufa : BaseZoufa
     {
         //没完 没有形成杀局，困局。还是双方正常交战中。
         //没完 子有没有被围，被困。
-        
+        //杀棋分数调整
         return 0;
     }
 

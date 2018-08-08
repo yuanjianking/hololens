@@ -1,7 +1,9 @@
 ﻿using System;
-
+using System.Text;
+//工具类
 public class Utility {
 
+    //
     public static void CheckQizi(FenData fen)
     { 
         //最新走法
@@ -156,10 +158,10 @@ public class Utility {
         return new PointData();
     }
 
-    public static Boolean CanEat(FenData fen)
+    public static Boolean CanEat(FenData fen,MoveData move)
     {
 
-        if (fen[fen.moves[0].end] == Qizi.KONGZI)
+        if (fen[move.end] == Qizi.KONGZI)
         {
             return false;
         }
@@ -168,6 +170,74 @@ public class Utility {
 
     public static String ConvertQiPanToString(FenData fen)
     {
-        return fen.chess.ToString();
+        StringBuilder builder = new StringBuilder();
+        //x0-8,y0-9(黑方：0-4，红方：5-9)
+        for (int x = 0; x <= 8; x++)
+        {
+            for (int y = 0; y <= 9; y++)
+            {
+                Qizi qizi = fen.chess[x, y];
+
+                builder.Append(GetQiZiString(qizi));
+            }
+        }
+
+        return builder.ToString();
+    }
+
+    public static String GetQiZiString(Qizi qizi)
+    {
+        String str = "";
+        switch (qizi)
+        {
+            case Qizi.REDSHUAI:
+                str = "K";
+                break;
+            case Qizi.BLACKJIANG:
+                str = "k";
+                break;
+            case Qizi.REDSHI:
+                str = "A";
+                break;
+            case Qizi.BLACKSHI:
+                str = "a";
+                break;
+            case Qizi.REDXIANG:
+                str = "B";
+                break;
+            case Qizi.BLACKXIANG:
+                str = "b";
+                break;
+            case Qizi.REDMA:
+                str = "N";
+                break;
+            case Qizi.BLACKMA:
+                str = "n";
+                break;
+            case Qizi.REDCHE:
+                str = "R";
+                break;
+            case Qizi.BLACKCHE:
+                str = "r";
+                break;
+            case Qizi.REDPAO:
+                str = "C";
+                break;
+            case Qizi.BLACKPAO:
+                str = "c";
+                break;
+            case Qizi.REDBING:
+                str = "p";
+                break;
+            case Qizi.BLACKZU:
+                str = "p";
+                break;
+
+            case Qizi.KONGZI:
+            default:
+                str = "0";
+                break;
+        }
+        return str;
     }
 }

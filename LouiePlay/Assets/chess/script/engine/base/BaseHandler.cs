@@ -1,16 +1,9 @@
 ﻿public abstract class BaseHandler {
-    protected CanjuData canju;
-    protected KaijuData kaiju;
-    private ExtentData extent;
+    protected CanjuLoader canjuloader;
+    protected KaijuLoader kaijuloader;
     protected BaseHandler()
     {
-        (new CanjuLoader()).LoadCanju(out canju);
-        (new KaijuLoader()).LoadKaiju(out kaiju);
-    }
-
-    public virtual ExtentData Extent
-    {
-        set;
-        get;
+        canjuloader = new CanjuLoader();
+        kaijuloader = new KaijuLoader();
     }
 }

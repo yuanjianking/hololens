@@ -1,15 +1,15 @@
 ﻿using System;
 
+//将来扩展查询速度用
 public class Zoufamiddleware {
-
-    //多任务执行。待实装。。。。。
+    
     public ResultData CheckZoufa(FenData fen)
     {
         ResultData result = new ResultData();
 
         try
         {
-            result = (new CheckZoufa((FenData)fen.Clone())).Check();
+            result = (new CheckZoufa(fen)).Check();
         }
         catch (AppException ae)
         {
@@ -35,7 +35,7 @@ public class Zoufamiddleware {
 
         try
         {
-            result = (new CheckZoufa((FenData)fen.Clone())).GetMoveLine();
+            result = (new GenerateMoveLine(fen)).GetMoveLine();
         }
         catch (AppException ae)
         {
@@ -57,8 +57,6 @@ public class Zoufamiddleware {
 
     public MoveData GetZoufa(FenData fen)
     {
-        MoveData result = new MoveData();
-
-        return (new GetZoufa(fen)).Zoufa();
+        return (new GenerateZoufa(fen)).Zoufa();
     }
 }

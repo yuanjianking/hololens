@@ -1,11 +1,13 @@
 ﻿
+using System;
 using System.Collections.Generic;
 
+//筛选走法
 public class SreachZoufa : BaseZoufa
 {
     private CreateZoufa create;
     private EvaluateZoufa evaluate;
-    private ChangeQiPan change;
+    private ChangeQipan change;
     private MoveData best;
 
     //无穷大
@@ -15,7 +17,7 @@ public class SreachZoufa : BaseZoufa
     {
         create = new CreateZoufa(fen);
         evaluate = new EvaluateZoufa(fen);
-        change = new ChangeQiPan(fen);
+        change = new ChangeQipan(fen);
     }
 
     public MoveData GetBestZoufa()
@@ -25,13 +27,16 @@ public class SreachZoufa : BaseZoufa
         //没完 Zobrist校验码
         //没完 检查重复局面
         //没完 置换表
-        int depth = 5;
-        AlphaBeta(-INFINITY, INFINITY, depth);
+        //  int depth = 1;
+        //    AlphaBeta(-INFINITY, INFINITY, depth);
+        List<MoveData> list = create.GetZoufaLsit();
+        best = list[new Random().Next(list.Count-1)];
         return best;
     }
 
     private int AlphaBeta(int alpha, int beta, int level)
     {
+
         int result = 0;
         if (level == 0)
         {
@@ -39,11 +44,12 @@ public class SreachZoufa : BaseZoufa
         }
         else
         {
+            int L = level - 1;
             List<MoveData> list = create.GetZoufaLsit();
             foreach (MoveData m in list)
             {
                 change.AddMove(m);
-                int val = -AlphaBeta(-beta, -alpha, --level);
+                int val = -AlphaBeta(-beta, -alpha, L);
                 change.GoBack();
                 if (val >= beta)
                 {

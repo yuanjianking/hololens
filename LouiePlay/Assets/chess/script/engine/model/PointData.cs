@@ -1,7 +1,6 @@
 ﻿using System;
 
 public class PointData:ICloneable
-
 {
     //棋盘左上角为0，0
     public int x = 0;
@@ -12,6 +11,12 @@ public class PointData:ICloneable
     {
         get { return new PointData(); }
         private set {}
+    }
+
+    public static PointData NgData
+    {
+        get { return new PointData(-1,-1,-1); }
+        private set { }
     }
 
     public PointData()
@@ -59,7 +64,7 @@ public class PointData:ICloneable
         PointData p = new PointData();
         p.x = point1.x * point2.x;
         p.y = point1.y * point2.y;
-        p.y = point1.z * point2.z;
+        p.z = point1.z * point2.z;
         return p;
     }
 
@@ -68,7 +73,7 @@ public class PointData:ICloneable
         PointData p = new PointData();
         p.x = point1.x * scale;
         p.y = point1.y * scale;
-        p.y = point1.z * scale;
+        p.z = point1.z * scale;
         return p;
     }
 
@@ -77,7 +82,7 @@ public class PointData:ICloneable
         PointData p = new PointData();
         p.x = point1.x + point2.x;
         p.y = point1.y + point2.y;
-        p.y = point1.z + point2.z;
+        p.z = point1.z + point2.z;
         return p;
     }
 
@@ -87,14 +92,14 @@ public class PointData:ICloneable
         PointData p = new PointData();
         p.x = point1.x - point2.x;
         p.y = point1.y - point2.y;
-        p.y = point1.z - point2.z;
+        p.z = point1.z - point2.z;
         return p;
     }
 
 
     public static bool operator ==(PointData point1, PointData point2)
     {
-        if (point1.x == point2.x && point1.y == point2.y && point1.z == point2.z)
+         if (point1.x == point2.x && point1.y == point2.y && point1.z == point2.z)
         {
             return true;
         }
