@@ -18,6 +18,7 @@ public class ChessManager
     //棋盘路线
     private GameObject roads = null;
     private static ILogger log = Debug.unityLogger;
+    
     #endregion
 
     #region 类初始化
@@ -54,6 +55,28 @@ public class ChessManager
     public void SetFenData(FenData fen)
     {
         Fen = fen;
+    }
+
+    public void SetSelected(PointData point)
+    {
+        //恢复坐标     
+        if (point.x != Fen.selected.x || point.y != Fen.selected.y)
+        {
+            MoveQizi(new MoveData(Fen.selected, Fen.selected));
+            GameObject obj = QiziMap.GetGameObject(point.x.ToString() + point.y.ToString());
+            Vector3 vector = obj.transform.localPosition;
+            obj.transform.localPosition = new Vector3(vector.x, vector.y + 0.5f, vector.z);
+            Fen.selected = point;
+        }
+        else 
+        {
+            GameObject obj = QiziMap.GetGameObject(point.x.ToString() + point.y.ToString());
+            Vector3 vector = obj.transform.localPosition;
+            if (vector.y == 1.0f)
+            {              
+                obj.transform.localPosition = new Vector3(vector.x, vector.y + 0.5f, vector.z);
+            }
+        }
     }
     #endregion
 
@@ -101,11 +124,12 @@ public class ChessManager
     }
 
     //检查走棋的位置，如果没有问题，执行走棋
-    public void CheckAndMove(PointData start, Vector3 position)
+    public void CheckAndMove(PointData end)
     {
+        PointData start = Fen.selected;
         MoveData move = new MoveData();
         move.start = start;
-        move.end = ConvertQiPanZuobiao(position);
+        move.end = end;
         if (move.end == PointData.NgData)
         {
             //恢复坐标
@@ -134,6 +158,7 @@ public class ChessManager
             Fen[move.start] = Qizi.KONGZI;
             Fen.current = Fen.current ^ 0x0003;
             Fen.count++;
+            HidenRoad();
         }
         else
         {
@@ -186,23 +211,13 @@ public class ChessManager
         qiziobj.z = move.end.z;
     }
 
-    //获得棋子坐标
-    public PointData ConvertQiPanZuobiao(Vector3 vector)
+    //释放棋子
+    public void ReleaseQizi()
     {
-        foreach (Transform road in roads.transform)
-        {
-            foreach (Transform d in road)
-            {
-                if ((d.position.x - 0.5) < vector.x && (d.position.x + 0.5) > vector.x &&
-                     (d.position.y - 0.5) < vector.y && (d.position.y + 0.5) > vector.y)
-                {
-                    int x = int.Parse(d.name.Substring(1));
-                    int y = int.Parse(road.name.Substring(4));
-                    return new PointData(x, y);
-                }
-            }
-        }
-        return PointData.NgData;
+        MoveData move = new MoveData();
+        move.start = Fen.selected;
+        move.end = Fen.selected;
+        MoveQizi(move);
     }
     #endregion
 
@@ -230,7 +245,7 @@ public class ChessManager
         {
             foreach (MoveData move in data.moves)
             {
-                roads.transform.Find("road" + move.end.y.ToString() + "/d" + move.end.x.ToString()).gameObject.SetActive(true);
+                roads.transform.Find(move.end.y.ToString() + "/" + move.end.x.ToString()).gameObject.SetActive(true);
             }
         }
     }

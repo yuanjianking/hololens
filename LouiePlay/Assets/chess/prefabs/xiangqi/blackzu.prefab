@@ -23,7 +23,6 @@ GameObject:
   - component: {fileID: 136569445514467554}
   - component: {fileID: 23670795986672142}
   - component: {fileID: 114213471449248472}
-  - component: {fileID: 114300707774764824}
   m_Layer: 5
   m_Name: blackzu
   m_TagString: black
@@ -101,17 +100,6 @@ MonoBehaviour:
   x: 8
   y: 3
   z: 0
---- !u!114 &114300707774764824
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1089088057923948}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1642b8cd1691114199ca9f3ae7c221a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!136 &136569445514467554
 CapsuleCollider:
   m_ObjectHideFlags: 1

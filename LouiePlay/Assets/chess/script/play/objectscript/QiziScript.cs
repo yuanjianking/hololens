@@ -2,7 +2,7 @@
 using System.Threading;
 using UnityEngine;
 
-public class QiziScript : MonoBehaviour, IFocusable
+public class QiziScript : MonoBehaviour, IFocusable, IInputClickHandler
 {
     public Qizi qizi = Qizi.KONGZI;
     public int current = Constant.RED;
@@ -21,15 +21,34 @@ public class QiziScript : MonoBehaviour, IFocusable
     public void OnFocusEnter()
     {
         //显示路线
-        ChessManager.GetInstant().ShowRoad(current, new PointData(x, y, z));
-        ChessManager.GetInstant().GetFenData().selected = new PointData(x, y, z);
-        GetComponent<Renderer>().material.color = Color.red;
+        //   ChessManager.GetInstant().ShowRoad(current, new PointData(x, y, z));
+        if (current == ChessManager.GetInstant().GetFenData().player1)
+            GetComponent<Renderer>().material.color = Color.red;
     }
 
     public void OnFocusExit()
     {
         //隐藏路线
-        ChessManager.GetInstant().HidenRoad();
-        GetComponent<Renderer>().material.color = Color.white;
+        //  ChessManager.GetInstant().HidenRoad();
+        if (current == ChessManager.GetInstant().GetFenData().player1)
+            GetComponent<Renderer>().material.color = Color.white;
+    }
+
+    public void OnInputClicked(InputClickedEventData eventData)
+    {
+        if (current == ChessManager.GetInstant().GetFenData().player1)
+        {
+            // Increase the scale of the object just as a response. 
+            PointData point = new PointData(x, y, z);
+            //隐藏路线
+            ChessManager.GetInstant().HidenRoad();
+            ChessManager.GetInstant().SetSelected(point);
+            ChessManager.GetInstant().ShowRoad(current, point);
+        }
+        else {
+            PointData point = new PointData(x, y, z);
+            ChessManager.GetInstant().CheckAndMove(point);
+        }
+        eventData.Use(); // Mark the event as used, so it doesn't fall through to other handlers.
     }
 }

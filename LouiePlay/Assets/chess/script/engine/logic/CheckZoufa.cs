@@ -194,7 +194,6 @@ public class CheckZoufa : BaseZoufa {
     }
     private void BingZuJiangJun(PointData point)
     {
-        ResultData result = new ResultData();
         for (int i = 0; i < 3; i++)
         {
             PointData p = point + Constant.BingZouFaDelta[i].target;

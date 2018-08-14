@@ -6,7 +6,7 @@ using UnityEngine;
 //生成当前棋局全部走法
 public class CreateZoufa : BaseZoufa
 {
-    private static ILogger log = Debug.unityLogger;
+//    private static ILogger log = Debug.unityLogger;
 
     public CreateZoufa(FenData fen) : base(fen)
     {
