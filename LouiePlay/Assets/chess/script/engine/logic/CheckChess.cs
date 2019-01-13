@@ -1,10 +1,10 @@
 ﻿
 public class CheckChess :BaseZoufa{
-    private ChangeQiPan change;
+    private ChangeQipan change;
 
     public CheckChess(FenData fen) : base(fen)
     {
-        change = new ChangeQiPan(fen);
+        change = new ChangeQipan(fen);
     }
 
     #region 判断将军
@@ -136,7 +136,6 @@ public class CheckChess :BaseZoufa{
     }
     private void BingZuJiangJun(PointData point)
     {
-        ResultData result = new ResultData();
         for (int i = 0; i < 3; i++)
         {
             if (((0x00F0 | fen.current) & (int)fen[point + Constant.BingZouFaDelta[i].target]) == 0x0070)
@@ -150,9 +149,9 @@ public class CheckChess :BaseZoufa{
     #region 判断棋子走法
     public ResultData CheckChe()
     {
-        ResultData result = new ResultData();
-       //最新走法
-        MoveData move = fen.moves[0];
+        ResultData result = new ResultData(); 
+         //最新走法
+         MoveData move = fen.moves[0];
         //没按直线移动
         if ((move.end - move.start) == PointData.Zero)
         {

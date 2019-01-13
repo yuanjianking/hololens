@@ -8,4 +8,5 @@ public class ResultData
     public String errorcode = "00";
     public String errormsg;
     public Boolean caneat = false;
+    public PgnData pgn = new PgnData();
 }
