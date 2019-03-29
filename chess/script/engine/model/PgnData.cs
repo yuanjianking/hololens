@@ -1,6 +1,4 @@
-﻿using System;
-
-public class PgnData {
+﻿public class PgnData {
     public FenData fen;
     public ExtentData extent;
 }

@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+using System.Text;
+//工具类
 public class Utility {
 
+    //
     public static void CheckQizi(FenData fen)
     { 
         //最新走法
-        MoveData move = fen[0];
+        MoveData move = fen.moves[0];
         //当前选择
         PointData point = fen.selected;
 
@@ -26,30 +25,7 @@ public class Utility {
             throw new AppException(ErrorMessage.AE0006);
         }
     }
-
-    public static Boolean IsBlack(Qizi qizi)
-    {
-        if (qizi >= Qizi.BLACKJIANG && qizi <= Qizi.BLACKZU)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    public static Boolean IsRed(Qizi qizi)
-    {
-        if (qizi >= Qizi.REDSHUAI && qizi <= Qizi.REDBING)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
+    
 
     public static DeltaData GetCheDelta(PointData offset)
     {
@@ -71,6 +47,32 @@ public class Utility {
             delta = Constant.CheZouFaDelta[0];
         }
         else {
+            throw new AppException(ErrorMessage.AE0005);
+        }
+        return delta;
+    }
+
+    public static DeltaData GetPaoDelta(PointData offset)
+    {
+        DeltaData delta = null;
+        if (offset.x == 0 && offset.y > 0)
+        {
+            delta = Constant.PaoZouFaDelta[0];
+        }
+        else if (offset.x == 0 && offset.y < 0)
+        {
+            delta = Constant.PaoZouFaDelta[0];
+        }
+        else if (offset.x > 0 && offset.y == 0)
+        {
+            delta = Constant.PaoZouFaDelta[0];
+        }
+        else if (offset.x < 0 && offset.y == 0)
+        {
+            delta = Constant.PaoZouFaDelta[0];
+        }
+        else
+        {
             throw new AppException(ErrorMessage.AE0005);
         }
         return delta;
@@ -155,5 +157,87 @@ public class Utility {
         }
         return new PointData();
     }
-    
+
+    public static Boolean CanEat(FenData fen,MoveData move)
+    {
+
+        if (fen[move.end] == Qizi.KONGZI)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    public static String ConvertQiPanToString(FenData fen)
+    {
+        StringBuilder builder = new StringBuilder();
+        //x0-8,y0-9(黑方：0-4，红方：5-9)
+        for (int x = 0; x <= 8; x++)
+        {
+            for (int y = 0; y <= 9; y++)
+            {
+                Qizi qizi = fen.chess[x, y];
+
+                builder.Append(GetQiZiString(qizi));
+            }
+        }
+
+        return builder.ToString();
+    }
+
+    public static String GetQiZiString(Qizi qizi)
+    {
+        String str = "";
+        switch (qizi)
+        {
+            case Qizi.REDSHUAI:
+                str = "K";
+                break;
+            case Qizi.BLACKJIANG:
+                str = "k";
+                break;
+            case Qizi.REDSHI:
+                str = "A";
+                break;
+            case Qizi.BLACKSHI:
+                str = "a";
+                break;
+            case Qizi.REDXIANG:
+                str = "B";
+                break;
+            case Qizi.BLACKXIANG:
+                str = "b";
+                break;
+            case Qizi.REDMA:
+                str = "N";
+                break;
+            case Qizi.BLACKMA:
+                str = "n";
+                break;
+            case Qizi.REDCHE:
+                str = "R";
+                break;
+            case Qizi.BLACKCHE:
+                str = "r";
+                break;
+            case Qizi.REDPAO:
+                str = "C";
+                break;
+            case Qizi.BLACKPAO:
+                str = "c";
+                break;
+            case Qizi.REDBING:
+                str = "p";
+                break;
+            case Qizi.BLACKZU:
+                str = "p";
+                break;
+
+            case Qizi.KONGZI:
+            default:
+                str = "0";
+                break;
+        }
+        return str;
+    }
 }

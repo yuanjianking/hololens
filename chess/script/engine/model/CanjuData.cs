@@ -1,22 +1,20 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class CanjuData {
-    private List<String> chanju= new List<String>();
-
-    public List<String> ChanJu
+    private Dictionary<String, MoveData> canju = new Dictionary<String, MoveData>();
+    public Dictionary<String, MoveData> CanJu
     {
-        set {
-            chanju = value;
+        set
+        {
+            canju = value;
         }
-        get { return chanju; }
+        get { return canju; }
     }
 
-    public String this[int index]
+    public MoveData this[string key]
     {
         set { }
-        get { return ChanJu[index]; }
+        get { return CanJu[key]; }
     }
 }

@@ -1,45 +1,74 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-
+﻿
 public enum Qizi
 {
     //空子
-    KONGZI = 0,
+    KONGZI = 0x0000,
     //占位
-    ZHANWEI = 1,
+    ZHANWEI = 0x000F,
     //红方
+    //平常
     //帅
-    REDSHUAI = 201,
+    REDSHUAI = 0x0011,
     //仕
-    REDSHI = 202,
+    REDSHI = 0x0021,
     //相
-    REDXIANG = 203,
+    REDXIANG = 0x0031,
     //马
-    REDMA = 204,
+    REDMA = 0x0041,
     //车
-    REDCHE = 205,
+    REDCHE = 0x0051,
     //炮
-    REDPAO = 206,
+    REDPAO = 0x0061,
     //兵
-    REDBING = 207,
+    REDBING = 0x0071,
+    
+    //高亮
+    //帅
+    HIGHLIGHTREDSHUAI = 0xFF11,
+    //仕
+    HIGHLIGHTREDSHI = 0xFF21,
+    //相
+    HIGHLIGHTREDXIANG = 0xFF31,
+    //马
+    HIGHLIGHTREDMA = 0xFF41,
+    //车
+    HIGHLIGHTREDCHE = 0xFF51,
+    //炮
+    HIGHLIGHTREDPAO = 0xFF61,
+    //兵
+    HIGHLIGHTREDBING = 0xFF71,
 
     //黑方
+    //平常
     //将
-    BLACKJIANG = 101,
+    BLACKJIANG = 0x0012,
     //士
-    BLACKSHI = 102,
+    BLACKSHI = 0x0022,
     //象
-    BLACKXIANG = 103,
+    BLACKXIANG = 0x0032,
     //马
-    BLACKMA = 104,
+    BLACKMA = 0x0042,
     //车
-    BLACKCHE = 105,
+    BLACKCHE = 0x0052,
     //炮
-    BLACKPAO = 106,
+    BLACKPAO = 0x0062,
     //卒
-    BLACKZU = 107
+    BLACKZU = 0x0072,
+
+    //高亮
+    //将
+    HIGHLIGHTBLACKJIANG = 0xFF12,
+    //士
+    HIGHLIGHTBLACKSHI = 0xFF22,
+    //象
+    HIGHLIGHTBLACKXIANG = 0xFF32,
+    //马
+    HIGHLIGHTBLACKMA = 0xFF42,
+    //车
+    HIGHLIGHTBLACKCHE = 0xFF52,
+    //炮
+    HIGHLIGHTBLACKPAO = 0xFF62,
+    //卒
+    HIGHLIGHTBLACKZU = 0xFF72
 }
 

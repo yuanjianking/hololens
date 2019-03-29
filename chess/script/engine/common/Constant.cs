@@ -1,21 +1,17 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public class Constant {
     //x0-8,y0-9(黑方：0-4，红方：5-9)
     public readonly static Qizi[,] CHESS = {
-        { Qizi.BLACKCHE,Qizi.BLACKMA, Qizi.BLACKXIANG,Qizi.BLACKSHI,Qizi.BLACKJIANG,Qizi.BLACKSHI,Qizi.BLACKXIANG,Qizi.BLACKMA, Qizi.BLACKCHE},
-        { Qizi.KONGZI,  Qizi.KONGZI,  Qizi.KONGZI,    Qizi.KONGZI,  Qizi.KONGZI,    Qizi.KONGZI,  Qizi.KONGZI,    Qizi.KONGZI,  Qizi.KONGZI},
-        { Qizi.KONGZI,  Qizi.BLACKPAO,Qizi.KONGZI,    Qizi.KONGZI,  Qizi.KONGZI,    Qizi.KONGZI,  Qizi.KONGZI,    Qizi.BLACKPAO,Qizi.KONGZI},
-        { Qizi.BLACKZU, Qizi.KONGZI,  Qizi.BLACKZU,   Qizi.KONGZI,  Qizi.BLACKZU,   Qizi.KONGZI,  Qizi.BLACKZU,   Qizi.KONGZI,  Qizi.BLACKZU},
-        { Qizi.KONGZI,  Qizi.KONGZI,  Qizi.KONGZI,    Qizi.KONGZI,  Qizi.KONGZI,    Qizi.KONGZI,  Qizi.KONGZI,    Qizi.KONGZI,  Qizi.KONGZI},
-        { Qizi.KONGZI,  Qizi.KONGZI,  Qizi.KONGZI,    Qizi.KONGZI,  Qizi.KONGZI,    Qizi.KONGZI,  Qizi.KONGZI,    Qizi.KONGZI,  Qizi.KONGZI},
-        { Qizi.REDBING, Qizi.KONGZI,  Qizi.REDBING,   Qizi.KONGZI,  Qizi.REDBING,   Qizi.KONGZI,  Qizi.REDBING,   Qizi.KONGZI,  Qizi.REDBING},
-        { Qizi.KONGZI,  Qizi.REDPAO,  Qizi.KONGZI,    Qizi.KONGZI,  Qizi.KONGZI,    Qizi.KONGZI,  Qizi.KONGZI,    Qizi.REDPAO,  Qizi.KONGZI},
-        { Qizi.KONGZI,  Qizi.KONGZI,  Qizi.KONGZI,    Qizi.KONGZI,  Qizi.KONGZI,    Qizi.KONGZI,  Qizi.KONGZI,    Qizi.KONGZI,  Qizi.KONGZI},
-        { Qizi.REDCHE,  Qizi.REDMA,   Qizi.REDXIANG,  Qizi.REDSHI,  Qizi.REDSHUAI,  Qizi.REDSHI,  Qizi.REDXIANG,  Qizi.REDMA,   Qizi.REDCHE}
+        { Qizi.BLACKCHE,  Qizi.KONGZI, Qizi.KONGZI,  Qizi.BLACKZU,Qizi.KONGZI,Qizi.KONGZI,Qizi.REDBING,Qizi.KONGZI,Qizi.KONGZI, Qizi.REDCHE},
+        { Qizi.BLACKMA,   Qizi.KONGZI, Qizi.BLACKPAO,Qizi.KONGZI, Qizi.KONGZI,Qizi.KONGZI,Qizi.KONGZI, Qizi.REDPAO,Qizi.KONGZI, Qizi.REDMA},
+        { Qizi.BLACKXIANG,Qizi.KONGZI, Qizi.KONGZI,  Qizi.BLACKZU,Qizi.KONGZI,Qizi.KONGZI,Qizi.REDBING,Qizi.KONGZI,Qizi.KONGZI, Qizi.REDXIANG},
+        { Qizi.BLACKSHI,  Qizi.KONGZI, Qizi.KONGZI,  Qizi.KONGZI, Qizi.KONGZI,Qizi.KONGZI,Qizi.KONGZI, Qizi.KONGZI,Qizi.KONGZI, Qizi.REDSHI},
+        { Qizi.BLACKJIANG,Qizi.KONGZI, Qizi.KONGZI,  Qizi.BLACKZU,Qizi.KONGZI,Qizi.KONGZI,Qizi.REDBING,Qizi.KONGZI,Qizi.KONGZI, Qizi.REDSHUAI},
+        { Qizi.BLACKSHI,  Qizi.KONGZI, Qizi.KONGZI,  Qizi.KONGZI, Qizi.KONGZI,Qizi.KONGZI,Qizi.KONGZI, Qizi.KONGZI,Qizi.KONGZI, Qizi.REDSHI},
+        { Qizi.BLACKXIANG,Qizi.KONGZI, Qizi.KONGZI,  Qizi.BLACKZU,Qizi.KONGZI,Qizi.KONGZI,Qizi.REDBING,Qizi.KONGZI,Qizi.KONGZI, Qizi.REDXIANG},
+        { Qizi.BLACKMA,   Qizi.KONGZI, Qizi.BLACKPAO,Qizi.KONGZI, Qizi.KONGZI,Qizi.KONGZI,Qizi.KONGZI, Qizi.REDPAO,Qizi.KONGZI, Qizi.REDMA},
+        { Qizi.BLACKCHE,  Qizi.KONGZI, Qizi.KONGZI,  Qizi.BLACKZU,Qizi.KONGZI,Qizi.KONGZI,Qizi.REDBING,Qizi.KONGZI,Qizi.KONGZI, Qizi.REDCHE}
     };
 
     //车 x固定y轴0-9，y固定x轴0-8 
@@ -50,6 +46,13 @@ public class Constant {
                                              new DeltaData(1, 0, 1, 0) };
 
     //对弈两方
-    public readonly static String RED = "0";
-    public readonly static String BLACK= "1";
+    public readonly static int RED = 0x0001;
+    public readonly static int BLACK= 0x0002;
+    //对弈双方MASK
+    public readonly static int QIZIGAOLIANG = 0xFF00;
+
+    //棋盘边界线
+    public readonly static int QIPANBIANJIE = 10;
+
 }
+

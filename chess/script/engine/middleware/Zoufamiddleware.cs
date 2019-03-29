@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
+//将来扩展查询速度用
 public class Zoufamiddleware {
-
-    //多任务执行。待实装。。。。。
+    
     public ResultData CheckZoufa(FenData fen)
     {
         ResultData result = new ResultData();
@@ -38,7 +35,7 @@ public class Zoufamiddleware {
 
         try
         {
-            result = (new CheckZoufa(fen)).GetMoveLine();
+            result = (new GenerateMoveLine(fen)).GetMoveLine();
         }
         catch (AppException ae)
         {
@@ -58,28 +55,8 @@ public class Zoufamiddleware {
     }
 
 
-    public ResultData GetZoufa(FenData fen)
+    public MoveData GetZoufa(FenData fen)
     {
-        ResultData result = new ResultData();
-
-        try
-        {
-            result = (new CreateZoufa(fen)).GetZoufa();
-        }
-        catch (AppException ae)
-        {
-            result.errorcode = ae.GetMsgCode();
-            result.errormsg = ae.GetMsg();
-        }
-        catch (Exception e)
-        {
-            result.errorcode = "99";
-            result.errormsg = e.Message;
-        }
-        finally
-        {
-            
-        }
-        return result;
+        return (new GenerateZoufa(fen)).Zoufa();
     }
 }
